@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>💖 LINH IUU – BASE64 & HEX STUDIO 💖</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #0a0015;
+            --bg-secondary: rgba(10, 0, 25, 0.92);
+            --bg-card: rgba(6, 0, 18, 0.7);
+            --bg-input: rgba(0, 0, 20, 0.6);
+            --bg-hover: rgba(255, 0, 255, 0.06);
+            --bg-active: rgba(255, 0, 255, 0.08);
+            --border-color: rgba(255, 0, 255, 0.1);
+            --border-hover: rgba(0, 255, 255, 0.3);
+            --border-input: #3a0a5a;
+            --text-primary: #f0d0ff;
+            --text-secondary: #b080d0;
+            --text-muted: #6a4a7a;
+            --text-accent: #ff44ff;
+            --text-accent2: #00ffff;
+            --shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+            --radius: 28px;
+            --radius-sm: 16px;
+            --radius-xs: 12px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-main: linear-gradient(135deg, #ff44ff, #00ffff);
+            --gradient-btn: linear-gradient(135deg, #aa00ff, #4400aa);
+            --gradient-btn-hover: linear-gradient(135deg, #ff44ff, #00ffff);
+            --gradient-card: linear-gradient(145deg, rgba(200, 0, 255, 0.03), rgba(0, 0, 0, 0));
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        [data-theme="light"] {
+            --bg-primary: #f0e6f5;
+            --bg-secondary: rgba(255, 255, 255, 0.92);
+            --bg-card: rgba(255, 255, 255, 0.7);
+            --bg-input: rgba(255, 255, 255, 0.8);
+            --bg-hover: rgba(200, 0, 255, 0.05);
+            --bg-active: rgba(200, 0, 255, 0.08);
+            --border-color: rgba(0, 0, 0, 0.06);
+            --border-hover: rgba(200, 0, 255, 0.2);
+            --border-input: #c0a0d0;
+            --text-primary: #1a0a2a;
+            --text-secondary: #6a4a8a;
+            --text-muted: #aa8aaa;
+            --text-accent: #cc44cc;
+            --text-accent2: #00aaaa;
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            --gradient-main: linear-gradient(135deg, #cc44cc, #00aaaa);
+            --gradient-btn: linear-gradient(135deg, #aa44aa, #660066);
+            --gradient-btn-hover: linear-gradient(135deg, #cc44cc, #00aaaa);
+            --gradient-card: linear-gradient(145deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0));
+        }
+        [data-theme="neon"] {
+            --bg-primary: #0a0015;
+            --bg-secondary: rgba(10, 0, 25, 0.92);
+            --bg-card: rgba(6, 0, 18, 0.7);
+            --bg-input: rgba(0, 0, 20, 0.6);
+            --bg-hover: rgba(255, 0, 255, 0.06);
+            --bg-active: rgba(255, 0, 255, 0.08);
+            --border-color: rgba(255, 0, 255, 0.1);
+            --border-hover: rgba(0, 255, 255, 0.3);
+            --border-input: #3a0a5a;
+            --text-primary: #f0d0ff;
+            --text-secondary: #b080d0;
+            --text-muted: #6a4a7a;
+            --text-accent: #ff44ff;
+            --text-accent2: #00ffff;
+            --shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+            --gradient-main: linear-gradient(135deg, #ff44ff, #00ffff);
+            --gradient-btn: linear-gradient(135deg, #aa00ff, #4400aa);
+            --gradient-btn-hover: linear-gradient(135deg, #ff44ff, #00ffff);
+            --gradient-card: linear-gradient(145deg, rgba(200, 0, 255, 0.03), rgba(0, 0, 0, 0));
+        }
+        body {
+            font-family: var(--font);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 14px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            transition: background var(--transition), color var(--transition);
+        }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: var(--text-accent); border-radius: 10px; }
+
+        #loginOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            backdrop-filter: blur(10px);
+        }
+        #loginOverlay.hidden { opacity: 0; pointer-events: none; transform: scale(1.05); }
+        .login-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 40px 36px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(20px);
+            animation: fadeInUp 0.5s ease;
+        }
+        .login-container .logo { text-align: center; margin-bottom: 28px; }
+        .login-container .logo i { font-size: 48px; color: var(--text-accent); filter: drop-shadow(0 0 20px var(--text-accent)); }
+        .login-container .logo h2 { font-size: 24px; font-weight: 800; background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 6px; }
+        .login-container .logo p { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
+        .login-container .form-group { margin-bottom: 18px; }
+        .login-container .form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 4px; }
+        .login-container .form-group input { width: 100%; padding: 12px 16px; background: var(--bg-input); border: 1px solid var(--border-input); border-radius: var(--radius-xs); color: var(--text-primary); font-size: 15px; outline: none; transition: var(--transition); }
+        .login-container .form-group input:focus { border-color: var(--text-accent); box-shadow: 0 0 0 3px rgba(255, 68, 255, 0.06); }
+        .login-container .btn-login { width: 100%; padding: 14px; background: var(--gradient-btn); border: none; border-radius: var(--radius-xs); color: #fff; font-size: 18px; font-weight: 700; cursor: pointer; transition: var(--transition); margin-top: 6px; }
+        .login-container .btn-login:hover { background: var(--gradient-btn-hover); transform: scale(1.02); box-shadow: 0 6px 24px rgba(255, 68, 255, 0.2); }
+        .login-container .error-msg { color: #ff4466; font-size: 13px; margin-top: 10px; text-align: center; min-height: 24px; }
+        .login-container .footer-login { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 16px; }
+
+        .app {
+            max-width: 1700px;
+            width: 100%;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius);
+            padding: 28px 26px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: all var(--transition);
+        }
+        .app::before {
+            content: '';
+            position: absolute;
+            top: -25%;
+            left: -5%;
+            width: 55%;
+            height: 80%;
+            background: radial-gradient(circle, rgba(255, 0, 200, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            gap: 14px;
+            position: relative;
+            z-index: 1;
+        }
+        .logo { display: flex; align-items: center; gap: 14px; }
+        .logo i { font-size: 34px; color: var(--text-accent); filter: drop-shadow(0 0 16px var(--text-accent)); }
+        .logo h1 { font-size: 28px; font-weight: 900; background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; }
+        .logo span { font-size: 14px; font-weight: 400; color: var(--text-muted); -webkit-text-fill-color: var(--text-muted); margin-left: 6px; }
+        .header-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .theme-selector {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-card);
+            padding: 4px;
+            border-radius: 40px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(4px);
+        }
+        .theme-selector button {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .theme-selector button.active { background: var(--text-accent); color: #000; box-shadow: 0 0 16px var(--text-accent); }
+        .theme-selector button:hover { color: var(--text-primary); }
+        .badge-pro {
+            background: rgba(255, 0, 204, 0.12);
+            border: 1px solid #ff44aa;
+            color: #ff88dd;
+            padding: 6px 20px;
+            border-radius: 60px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
+        }
+        .badge-pro i { margin-right: 6px; }
+        .btn-logout {
+            background: rgba(255, 0, 0, 0.08);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            color: #ff6666;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(4px);
+        }
+        .btn-logout:hover { background: rgba(255, 0, 0, 0.12); border-color: #ff6666; color: #ff8888; }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 22px;
+            position: relative;
+            z-index: 1;
+        }
+        .toolbar button, .toolbar label {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 7px 14px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(4px);
+            white-space: nowrap;
+        }
+        .toolbar button:hover { background: var(--bg-hover); border-color: var(--border-hover); color: var(--text-primary); transform: translateY(-1px); }
+        .toolbar button i { color: var(--text-accent); }
+        .toolbar input[type="file"] { display: none; }
+        .toolbar .sep { width: 1px; background: var(--border-color); margin: 0 4px; }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 18px;
+            position: relative;
+            z-index: 1;
+        }
+        @media (max-width: 1200px) { .main-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            backdrop-filter: blur(4px);
+            transition: all var(--transition);
+            background-image: var(--gradient-card);
+        }
+        .card:hover { border-color: var(--border-hover); }
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            font-size: 15px;
+            letter-spacing: 0.2px;
+        }
+        .card-title i { color: var(--text-accent); font-size: 18px; }
+        .card-title .badge-count {
+            background: rgba(255, 68, 255, 0.06);
+            color: var(--text-accent);
+            padding: 2px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-left: auto;
+        }
+
+        .form-group { margin-bottom: 2px; }
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .form-group label i { color: var(--text-accent); width: 16px; font-size: 13px; }
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-input);
+            border-radius: var(--radius-xs);
+            color: var(--text-primary);
+            font-size: 13px;
+            transition: var(--transition);
+            outline: none;
+            font-family: 'Fira Code', monospace;
+        }
+        .form-control:focus { border-color: var(--text-accent); box-shadow: 0 0 0 3px rgba(255, 68, 255, 0.06); }
+        .form-control::placeholder { color: var(--text-muted); }
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+            font-size: 12px;
+        }
+
+        .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+        .row > * { flex: 1; min-width: 80px; }
+
+        .btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(4px);
+            white-space: nowrap;
+        }
+        .btn:hover { background: var(--bg-hover); border-color: var(--border-hover); color: var(--text-primary); transform: translateY(-1px); }
+        .btn i { color: var(--text-accent); }
+        .btn-primary { background: var(--gradient-btn); color: #fff; border: none; }
+        .btn-primary:hover { background: var(--gradient-btn-hover); }
+        .btn-primary i { color: #fff; }
+        .btn-gold { border-color: #ffd700; color: #ffd700; }
+        .btn-gold:hover { background: #ffd700; color: #000; }
+        .btn-sm { padding: 4px 10px; font-size: 10px; }
+        .btn-danger { border-color: #ff2244; color: #ff2244; }
+        .btn-danger:hover { background: #ff2244; color: #fff; }
+
+        .preview-box {
+            background: var(--bg-input);
+            border: 1px solid var(--border-input);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            max-height: 350px;
+            overflow: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 11px;
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+            word-break: break-all;
+            transition: var(--transition);
+            line-height: 1.5;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 3px 0;
+        }
+        .stats-row span {
+            background: rgba(255, 68, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 3px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        .stats-row span i { color: var(--text-accent); margin-right: 4px; }
+
+        .status-bar {
+            margin-top: 18px;
+            padding: 10px 18px;
+            background: var(--bg-card);
+            border-radius: 40px;
+            border-left: 6px solid var(--text-accent2);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            position: relative;
+            z-index: 1;
+            border: 1px solid var(--border-color);
+        }
+        .status-bar .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-accent); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+        .status-bar .status-text { flex: 1; }
+        .status-bar .status-time { font-size: 11px; color: var(--text-muted); }
+
+        .result-area {
+            background: var(--bg-input);
+            border: 1px solid var(--border-input);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            max-height: 400px;
+            overflow: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 12px;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+            word-break: break-all;
+            transition: var(--transition);
+            line-height: 1.6;
+            margin-top: 6px;
+        }
+
+        .footer {
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 11px;
+            color: var(--text-muted);
+            position: relative;
+            z-index: 1;
+        }
+        .footer a { color: var(--text-accent); text-decoration: none; font-weight: 500; }
+        .footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 640px) {
+            .app { padding: 14px 10px; border-radius: 24px; }
+            .main-grid { grid-template-columns: 1fr; }
+            .logo h1 { font-size: 20px; }
+            .logo span { display: none; }
+            .toolbar button { font-size: 11px; padding: 5px 10px; }
+            .badge-pro { font-size: 9px; padding: 3px 12px; }
+            .theme-selector button { font-size: 10px; padding: 3px 8px; }
+            .login-container { padding: 24px 18px; margin: 14px; }
+            .row { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN -->
+    <div id="loginOverlay">
+        <div class="login-container">
+            <div class="logo">
+                <i class="fas fa-crown"></i>
+                <h2>💖 LINH IUU STUDIO</h2>
+                <p>Nhập key để kích hoạt VIP</p>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-key"></i> License Key</label>
+                <input type="text" id="loginKey" placeholder="Nhập key..." value="ANOS2026">
+            </div>
+            <button class="btn-login" onclick="handleLogin()"><i class="fas fa-unlock"></i> Kích hoạt</button>
+            <div class="error-msg" id="loginError"></div>
+            <div class="footer-login">
+                <span>Key mặc định: <strong style="color:#ff44ff;">ANOS2026</strong></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- APP -->
+    <div class="app" id="appMain" style="display:none;">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-heart" style="color:#ff44ff;"></i>
+                <h1>Linh Iuu <span>Base64 & Hex Studio</span></h1>
+            </div>
+            <div class="header-actions">
+                <div class="theme-selector" id="themeSelector">
+                    <button data-theme="dark" class="active" onclick="setTheme('dark')"><i class="fas fa-moon"></i></button>
+                    <button data-theme="light" onclick="setTheme('light')"><i class="fas fa-sun"></i></button>
+                    <button data-theme="neon" onclick="setTheme('neon')"><i class="fas fa-bolt"></i></button>
+                </div>
+                <button class="btn-logout" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
+                <div class="badge-pro"><i class="fas fa-star"></i> Linh Iuu · v16.0</div>
+            </div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="toolbar">
+            <button onclick="clearAll()"><i class="fas fa-eraser"></i> Xóa tất cả</button>
+            <button onclick="exportResult()"><i class="fas fa-file-export"></i> Xuất kết quả</button>
+            <button onclick="document.getElementById('importFile').click()"><i class="fas fa-file-import"></i> Nhập file</button>
+            <input type="file" id="importFile" accept=".txt,.bin,.hex" onchange="importFile(event)" />
+            <span class="sep"></span>
+            <button onclick="saveLocal()"><i class="fas fa-save"></i> Lưu</button>
+            <button onclick="loadLocal()"><i class="fas fa-upload"></i> Tải</button>
+            <span class="sep"></span>
+            <button onclick="generateDeepCode()" style="border-color:#ff44ff;color:#ff44ff;"><i class="fas fa-skull"></i> Tạo Deep Code</button>
+        </div>
+
+        <!-- MAIN GRID -->
+        <div class="main-grid">
+            <!-- CỘT 1: Base64 -->
+            <div>
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-lock"></i> Base64 <span class="badge-count">Encode/Decode</span></div>
+                    <div class="form-group">
+                        <label><i class="fas fa-arrow-right"></i> Input</label>
+                        <textarea class="form-control" id="base64Input" placeholder="Dán text hoặc Base64 vào đây..."></textarea>
+                    </div>
+                    <div class="row">
+                        <button onclick="base64Encode()" class="btn btn-primary"><i class="fas fa-lock"></i> Encode</button>
+                        <button onclick="base64Decode()" class="btn btn-gold"><i class="fas fa-unlock"></i> Decode</button>
+                        <button onclick="clearInput('base64Input')" class="btn btn-danger"><i class="fas fa-times"></i> Xóa</button>
+                    </div>
+                    <div class="form-group mt-10">
+                        <label><i class="fas fa-arrow-left"></i> Output</label>
+                        <textarea class="form-control" id="base64Output" placeholder="Kết quả sẽ hiển thị ở đây..." style="min-height:100px;"></textarea>
+                    </div>
+                    <button onclick="copyText('base64Output')" class="btn btn-sm"><i class="fas fa-copy"></i> Sao chép</button>
+                </div>
+            </div>
+
+            <!-- CỘT 2: Hex Stream -->
+            <div>
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-code"></i> Hex Stream <span class="badge-count">Hex ↔ Text</span></div>
+                    <div class="form-group">
+                        <label><i class="fas fa-arrow-right"></i> Input</label>
+                        <textarea class="form-control" id="hexInput" placeholder="Dán text hoặc Hex vào đây... (ví dụ: 48656C6C6F)"></textarea>
+                    </div>
+                    <div class="row">
+                        <button onclick="hexEncode()" class="btn btn-primary"><i class="fas fa-code"></i> Text → Hex</button>
+                        <button onclick="hexDecode()" class="btn btn-gold"><i class="fas fa-undo"></i> Hex → Text</button>
+                        <button onclick="clearInput('hexInput')" class="btn btn-danger"><i class="fas fa-times"></i> Xóa</button>
+                    </div>
+                    <div class="form-group mt-10">
+                        <label><i class="fas fa-arrow-left"></i> Output</label>
+                        <textarea class="form-control" id="hexOutput" placeholder="Kết quả sẽ hiển thị ở đây..." style="min-height:100px;"></textarea>
+                    </div>
+                    <button onclick="copyText('hexOutput')" class="btn btn-sm"><i class="fas fa-copy"></i> Sao chép</button>
+                </div>
+            </div>
+
+            <!-- CỘT 3: Nhân bản code -->
+            <div>
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-copy"></i> Nhân bản code <span class="badge-count">Clone VIP</span></div>
+                    <div class="form-group">
+                        <label><i class="fas fa-arrow-right"></i> Code gốc</label>
+                        <textarea class="form-control" id="cloneInput" placeholder="Dán code cần nhân bản vào đây..." style="min-height:100px;"></textarea>
+                    </div>
+                    <div class="row">
+                        <div style="flex:1;">
+                            <label style="font-size:10px;color:var(--text-muted);">Số lần nhân bản</label>
+                            <input type="number" id="cloneCount" value="5" min="1" max="999" class="form-control" style="padding:4px 8px;">
+                        </div>
+                        <div style="flex:1;display:flex;align-items:flex-end;">
+                            <button onclick="cloneCode()" class="btn btn-gold" style="width:100%;"><i class="fas fa-copy"></i> Nhân bản</button>
+                        </div>
+                    </div>
+                    <div class="form-group mt-10">
+                        <label><i class="fas fa-arrow-left"></i> Kết quả nhân bản (liền nhau, không ngăn cách)</label>
+                        <textarea class="form-control" id="cloneOutput" placeholder="Kết quả nhân bản sẽ hiển thị ở đây..." style="min-height:120px;"></textarea>
+                    </div>
+                    <div class="row">
+                        <button onclick="copyText('cloneOutput')" class="btn btn-primary"><i class="fas fa-copy"></i> Sao chép tất cả</button>
+                        <button onclick="clearInput('cloneOutput')" class="btn btn-danger"><i class="fas fa-times"></i> Xóa</button>
+                        <button onclick="clearInput('cloneInput')" class="btn btn-danger"><i class="fas fa-times"></i> Xóa code gốc</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DEEP CODE VIEWER -->
+        <div class="card mt-10">
+            <div class="card-title"><i class="fas fa-skull"></i> Deep Code Viewer <span class="badge-count">VIP Logic</span></div>
+            <div class="preview-box" id="deepCodePreview" style="max-height:250px;">🔍 Nhấn "Tạo Deep Code" để sinh code hack sâu nhất.</div>
+            <div class="row">
+                <button onclick="generateDeepCode()" class="btn btn-primary"><i class="fas fa-skull"></i> Tạo Deep Code</button>
+                <button onclick="copyText('deepCodePreview')" class="btn btn-gold"><i class="fas fa-copy"></i> Sao chép</button>
+                <button onclick="exportDeepCode()" class="btn"><i class="fas fa-file-export"></i> Xuất .txt</button>
+            </div>
+        </div>
+
+        <!-- STATUS -->
+        <div class="status-bar">
+            <span class="dot"></span>
+            <span class="status-text" id="statusText">💖 Linh Iuu Base64 & Hex Studio sẵn sàng.</span>
+            <span class="status-time" id="statusTime"></span>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <span><i class="fas fa-heart" style="color:#ff44ff;"></i> Linh Iuu · Base64 & Hex Studio · v16.0</span>
+            <span><i class="fas fa-bolt"></i> Clone liền nhau · Không ngăn cách</span>
+            <a href="#" onclick="location.reload();return false;"><i class="fas fa-undo-alt"></i> Reload</a>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // LOGIN
+        // ============================================================
+        var LICENSE_KEY = 'ANOS2026';
+        var isLoggedIn = false;
+
+        function checkLogin() {
+            var loginOverlay = document.getElementById('loginOverlay');
+            var appMain = document.getElementById('appMain');
+            try {
+                var logged = localStorage.getItem('linhiuu_logged_in');
+                if (logged === 'true') {
+                    loginOverlay.classList.add('hidden');
+                    appMain.style.display = 'block';
+                    initApp();
+                    return;
+                }
+            } catch (e) {
+                loginOverlay.classList.add('hidden');
+                appMain.style.display = 'block';
+                initApp();
+                return;
+            }
+            loginOverlay.classList.remove('hidden');
+            appMain.style.display = 'none';
+        }
+
+        function handleLogin() {
+            var keyInput = document.getElementById('loginKey');
+            var errorEl = document.getElementById('loginError');
+            var key = keyInput.value.trim();
+            if (key === LICENSE_KEY) {
+                try { localStorage.setItem('linhiuu_logged_in', 'true'); } catch (e) {}
+                document.getElementById('loginOverlay').classList.add('hidden');
+                document.getElementById('appMain').style.display = 'block';
+                errorEl.textContent = '';
+                keyInput.value = '';
+                initApp();
+            } else {
+                errorEl.textContent = '❌ Key không hợp lệ! Vui lòng thử lại.';
+                keyInput.value = '';
+                keyInput.focus();
+            }
+        }
+
+        function handleLogout() {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                try { localStorage.removeItem('linhiuu_logged_in'); } catch (e) {}
+                document.getElementById('loginOverlay').classList.remove('hidden');
+                document.getElementById('appMain').style.display = 'none';
+                document.getElementById('loginError').textContent = '';
+                document.getElementById('loginKey').value = '';
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                var loginOverlay = document.getElementById('loginOverlay');
+                if (!loginOverlay.classList.contains('hidden')) { handleLogin(); }
+            }
+        });
+
+        // ============================================================
+        // THEME
+        // ============================================================
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            var btns = document.querySelectorAll('.theme-selector button');
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].classList.toggle('active', btns[i].dataset.theme === theme);
+            }
+            try { localStorage.setItem('linhiuu_theme', theme); } catch (e) {}
+        }
+
+        // ============================================================
+        // BASE64 FUNCTIONS
+        // ============================================================
+        function base64Encode() {
+            var input = document.getElementById('base64Input').value;
+            if (!input) { updateStatus('⚠️ Vui lòng nhập dữ liệu.'); return; }
+            try {
+                var encoded = btoa(unescape(encodeURIComponent(input)));
+                document.getElementById('base64Output').value = encoded;
+                updateStatus('✅ Mã hóa Base64 thành công. Độ dài: ' + encoded.length);
+            } catch (e) {
+                updateStatus('❌ Lỗi mã hóa: ' + e.message);
+            }
+        }
+
+        function base64Decode() {
+            var input = document.getElementById('base64Input').value;
+            if (!input) { updateStatus('⚠️ Vui lòng nhập dữ liệu.'); return; }
+            try {
+                var decoded = decodeURIComponent(escape(atob(input)));
+                document.getElementById('base64Output').value = decoded;
+                updateStatus('✅ Giải mã Base64 thành công. Độ dài: ' + decoded.length);
+            } catch (e) {
+                updateStatus('❌ Lỗi giải mã: ' + e.message);
+            }
+        }
+
+        // ============================================================
+        // HEX FUNCTIONS
+        // ============================================================
+        function hexEncode() {
+            var input = document.getElementById('hexInput').value;
+            if (!input) { updateStatus('⚠️ Vui lòng nhập dữ liệu.'); return; }
+            try {
+                var hex = '';
+                for (var i = 0; i < input.length; i++) {
+                    hex += input.charCodeAt(i).toString(16).padStart(2, '0').toUpperCase();
+                }
+                document.getElementById('hexOutput').value = hex;
+                updateStatus('✅ Chuyển Text → Hex thành công. Độ dài: ' + hex.length);
+            } catch (e) {
+                updateStatus('❌ Lỗi chuyển đổi: ' + e.message);
+            }
+        }
+
+        function hexDecode() {
+            var input = document.getElementById('hexInput').value.replace(/\s/g, '');
+            if (!input) { updateStatus('⚠️ Vui lòng nhập dữ liệu.'); return; }
+            if (input.length % 2 !== 0) { updateStatus('❌ Hex không hợp lệ (số ký tự lẻ).'); return; }
+            try {
+                var text = '';
+                for (var i = 0; i < input.length; i += 2) {
+                    text += String.fromCharCode(parseInt(input.substr(i, 2), 16));
+                }
+                document.getElementById('hexOutput').value = text;
+                updateStatus('✅ Chuyển Hex → Text thành công. Độ dài: ' + text.length);
+            } catch (e) {
+                updateStatus('❌ Lỗi chuyển đổi: ' + e.message);
+            }
+        }
+
+        // ============================================================
+        // CLONE CODE - NHÂN BẢN LIỀN NHAU, KHÔNG NGĂN CÁCH
+        // ============================================================
+        function cloneCode() {
+            var input = document.getElementById('cloneInput').value;
+            var count = parseInt(document.getElementById('cloneCount').value) || 5;
+            if (!input) { updateStatus('⚠️ Vui lòng nhập code cần nhân bản.'); return; }
+            if (count < 1) { count = 1; }
+            if (count > 999) { count = 999; }
+
+            var result = '';
+            for (var i = 0; i < count; i++) {
+                result += input;
+            }
+
+            document.getElementById('cloneOutput').value = result;
+            updateStatus('✅ Nhân bản thành công ' + count + ' lần. Tổng độ dài: ' + result.length + ' ký tự.');
+        }
+
+        // ============================================================
+        // DEEP CODE GENERATOR - VIP LOGIC ĂN SÂU
+        // ============================================================
+        function generateDeepCode() {
+            var input = document.getElementById('cloneInput').value || document.getElementById('base64Input').value ||
+                document.getElementById('hexInput').value || '// Code mẫu\nvoid DeepHack() {\n    // Logic hack sâu nhất\n}';
+
+            var code = '// ============================================================\n' +
+                '// 💖 LINH IUU – DEEP HACK ENGINE (VIP)\n' +
+                '// ============================================================\n' +
+                '// 📌 Tác giả: Linh Iuu\n' +
+                '// 📌 Phiên bản: 16.0 VIP\n' +
+                '// 📌 Ngày: ' + new Date().toISOString() + '\n' +
+                '// ============================================================\n\n' +
+                '#include <jni.h>\n' +
+                '#include <android/log.h>\n' +
+                '#include <cmath>\n' +
+                '#include <vector>\n' +
+                '#include <thread>\n' +
+                '#include <chrono>\n' +
+                '#include <random>\n' +
+                '#include <algorithm>\n' +
+                '#include <dlfcn.h>\n' +
+                '#include <sys/mman.h>\n' +
+                '#include <unistd.h>\n' +
+                '#include <string.h>\n\n' +
+                '#define LOG_TAG "LINH_IUU_DEEP"\n' +
+                '#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)\n\n' +
+                '// ============================================================\n' +
+                '// OFFSET STRUCT - DEEP SCAN\n' +
+                '// ============================================================\n' +
+                'struct Offsets {\n' +
+                '    uintptr_t LocalPlayer = 0x12345678;\n' +
+                '    uintptr_t PlayerList = 0x23456789;\n' +
+                '    uintptr_t ViewPitch = 0x200;\n' +
+                '    uintptr_t ViewYaw = 0x204;\n' +
+                '    uintptr_t PlayerUpdate = 0x2C4A80;\n' +
+                '    uintptr_t WeaponFire = 0x2D5B90;\n' +
+                '    uintptr_t Health = 0x1F0;\n' +
+                '    uintptr_t Armor = 0x1F4;\n' +
+                '    uintptr_t Ammo = 0x1C0;\n' +
+                '    uintptr_t MaxAmmo = 0x1C4;\n' +
+                '    uintptr_t TeamId = 0x304;\n' +
+                '    uintptr_t GameManager = 0x34567890;\n' +
+                '    uintptr_t PosX = 0x80;\n' +
+                '    uintptr_t PosY = 0x84;\n' +
+                '    uintptr_t PosZ = 0x88;\n' +
+                '    uintptr_t VelocityX = 0x90;\n' +
+                '    uintptr_t VelocityY = 0x94;\n' +
+                '    uintptr_t VelocityZ = 0x98;\n' +
+                '    uintptr_t BoneBase = 0x120;\n' +
+                '    uintptr_t WeaponBase = 0x1A0;\n' +
+                '    uintptr_t BulletSpeed = 0x1A8;\n' +
+                '    uintptr_t RecoilX = 0x1B0;\n' +
+                '    uintptr_t RecoilY = 0x1B4;\n' +
+                '};\n\n' +
+                '// ============================================================\n' +
+                '// DEEP MEMORY CLASS\n' +
+                '// ============================================================\n' +
+                'class DeepMemory {\n' +
+                'public:\n' +
+                '    static float ReadFloat(uintptr_t addr) { if (addr < 0x1000) return 0; return *(float*)addr; }\n' +
+                '    static uintptr_t ReadPtr(uintptr_t addr) { if (addr < 0x1000) return 0; return *(uintptr_t*)addr; }\n' +
+                '    static void WriteFloat(uintptr_t addr, float val) { if (addr > 0x1000) *(float*)addr = val; }\n' +
+                '    static void WriteInt(uintptr_t addr, int val) { if (addr > 0x1000) *(int*)addr = val; }\n' +
+                '    static void WriteBytes(uintptr_t addr, const uint8_t* data, size_t len) {\n' +
+                '        if (addr > 0x1000) {\n' +
+                '            mprotect((void*)(addr & ~0xFFF), 0x1000, PROT_READ | PROT_WRITE | PROT_EXEC);\n' +
+                '            memcpy((void*)addr, data, len);\n' +
+                '            mprotect((void*)(addr & ~0xFFF), 0x1000, PROT_READ | PROT_EXEC);\n' +
+                '        }\n' +
+                '    }\n' +
+                '    static uintptr_t PatternScan(uintptr_t start, size_t size, const char* pattern, const char* mask) {\n' +
+                '        size_t patternLen = strlen(mask);\n' +
+                '        for (uintptr_t i = 0; i < size - patternLen; i++) {\n' +
+                '            bool found = true;\n' +
+                '            for (size_t j = 0; j < patternLen; j++) {\n' +
+                '                if (mask[j] == \'x\') {\n' +
+                '                    if (*(uint8_t*)(start + i + j) != (uint8_t)pattern[j]) {\n' +
+                '                        found = false;\n' +
+                '                        break;\n' +
+                '                    }\n' +
+                '                }\n' +
+                '            }\n' +
+                '            if (found) return start + i;\n' +
+                '        }\n' +
+                '        return 0;\n' +
+                '    }\n' +
+                '};\n\n' +
+                '// ============================================================\n' +
+                '// PASTE ZONE - CODE CỦA MÀY\n' +
+                '// ============================================================\n' +
+                input + '\n\n' +
+                '// ============================================================\n' +
+                '// DEEP AIMBOT - VIP LOGIC\n' +
+                '// ============================================================\n' +
+                'void DeepAimbot() {\n' +
+                '    if (!g_localPlayer || !g_enabled) return;\n' +
+                '    uintptr_t playerList = DeepMemory::ReadPtr(g_base + g_offsets.PlayerList);\n' +
+                '    if (!playerList) return;\n' +
+                '    Vector3 localPos = Vector3(\n' +
+                '        DeepMemory::ReadFloat(g_localPlayer + g_offsets.PosX),\n' +
+                '        DeepMemory::ReadFloat(g_localPlayer + g_offsets.PosY),\n' +
+                '        DeepMemory::ReadFloat(g_localPlayer + g_offsets.PosZ)\n' +
+                '    );\n' +
+                '    float bestDist = 9999.0f;\n' +
+                '    uintptr_t bestTarget = 0;\n' +
+                '    Vector3 bestHead(0, 0, 0);\n' +
+                '    for (int i = 0; i < 0x64; i++) {\n' +
+                '        uintptr_t player = DeepMemory::ReadPtr(playerList + i * sizeof(uintptr_t));\n' +
+                '        if (!player || player == g_localPlayer) continue;\n' +
+                '        float health = DeepMemory::ReadFloat(player + g_offsets.Health);\n' +
+                '        if (health <= 0 || health > 100) continue;\n' +
+                '        int team = DeepMemory::ReadInt(player + g_offsets.TeamId);\n' +
+                '        int localTeam = DeepMemory::ReadInt(g_localPlayer + g_offsets.TeamId);\n' +
+                '        if (team == localTeam) continue;\n' +
+                '        uintptr_t boneBase = DeepMemory::ReadPtr(player + g_offsets.BoneBase);\n' +
+                '        if (!boneBase) continue;\n' +
+                '        uintptr_t targetBone = boneBase + (g_config.boneId * 0x20);\n' +
+                '        Vector3 headPos = Vector3(\n' +
+                '            DeepMemory::ReadFloat(targetBone),\n' +
+                '            DeepMemory::ReadFloat(targetBone + 4),\n' +
+                '            DeepMemory::ReadFloat(targetBone + 8)\n' +
+                '        );\n' +
+                '        float dist = Vector3::Distance(localPos, headPos);\n' +
+                '        if (dist > g_config.maxDistance) continue;\n' +
+                '        float curPitch = DeepMemory::ReadFloat(g_base + g_offsets.ViewPitch);\n' +
+                '        float curYaw = DeepMemory::ReadFloat(g_base + g_offsets.ViewYaw);\n' +
+                '        float pitch = -asinf((headPos.y - localPos.y) / dist) * (180.0f / M_PI);\n' +
+                '        float yaw = atan2f(headPos.x - localPos.x, headPos.z - localPos.z) * (180.0f / M_PI);\n' +
+                '        float angleDiff = Vector3::AngleDiff(pitch, yaw, curPitch, curYaw);\n' +
+                '        if (angleDiff > g_config.fov) continue;\n' +
+                '        float score = (100.0f / dist) * 1.5f + (1.0f / (angleDiff + 0.1f)) * 2.0f;\n' +
+                '        if (score > bestScore) {\n' +
+                '            bestScore = score;\n' +
+                '            bestDist = dist;\n' +
+                '            bestTarget = player;\n' +
+                '            bestHead = headPos;\n' +
+                '        }\n' +
+                '    }\n' +
+                '    if (!bestTarget) return;\n' +
+                '    if (g_config.predictionWeight > 0.01f) {\n' +
+                '        Vector3 vel = Vector3(\n' +
+                '            DeepMemory::ReadFloat(bestTarget + g_offsets.VelocityX),\n' +
+                '            DeepMemory::ReadFloat(bestTarget + g_offsets.VelocityY),\n' +
+                '            DeepMemory::ReadFloat(bestTarget + g_offsets.VelocityZ)\n' +
+                '        );\n' +
+                '        float bulletSpeed = 800.0f;\n' +
+                '        uintptr_t weapon = DeepMemory::ReadPtr(g_localPlayer + g_offsets.WeaponBase);\n' +
+                '        if (weapon) bulletSpeed = DeepMemory::ReadFloat(weapon + g_offsets.BulletSpeed);\n' +
+                '        float flyTime = bestDist / (bulletSpeed + 0.001f);\n' +
+                '        bestHead.x += vel.x * flyTime * g_config.predictionWeight;\n' +
+                '        bestHead.y += vel.y * flyTime * g_config.predictionWeight;\n' +
+                '        bestHead.z += vel.z * flyTime * g_config.predictionWeight;\n' +
+                '    }\n' +
+                '    Vector3 delta = bestHead - localPos;\n' +
+                '    float dist = delta.Length();\n' +
+                '    if (dist < 0.001f) return;\n' +
+                '    float targetPitch = -asinf(delta.y / dist) * (180.0f / M_PI);\n' +
+                '    float targetYaw = atan2f(delta.x, delta.z) * (180.0f / M_PI);\n' +
+                '    float curPitch = DeepMemory::ReadFloat(g_base + g_offsets.ViewPitch);\n' +
+                '    float curYaw = DeepMemory::ReadFloat(g_base + g_offsets.ViewYaw);\n' +
+                '    float diffPitch = targetPitch - curPitch;\n' +
+                '    float diffYaw = targetYaw - curYaw;\n' +
+                '    diffPitch *= (1.0f - g_config.overshootReduce);\n' +
+                '    diffYaw *= (1.0f - g_config.overshootReduce);\n' +
+                '    float maxStep = 3.0f + (bestDist * 0.02f) * (1.0f - g_config.dropComp);\n' +
+                '    if (fabs(diffPitch) > maxStep) diffPitch = (diffPitch > 0) ? maxStep : -maxStep;\n' +
+                '    if (fabs(diffYaw) > maxStep) diffYaw = (diffYaw > 0) ? maxStep : -maxStep;\n' +
+                '    float smoothFactor = g_config.smooth * g_config.aimSpeed;\n' +
+                '    diffPitch *= smoothFactor;\n' +
+                '    diffYaw *= smoothFactor;\n' +
+                '    if (g_config.enableNoRecoil) {\n' +
+                '        uintptr_t weapon = DeepMemory::ReadPtr(g_localPlayer + g_offsets.WeaponBase);\n' +
+                '        if (weapon) {\n' +
+                '            float recX = DeepMemory::ReadFloat(weapon + g_offsets.RecoilX);\n' +
+                '            float recY = DeepMemory::ReadFloat(weapon + g_offsets.RecoilY);\n' +
+                '            diffPitch -= recX * g_config.recoilComp;\n' +
+                '            diffYaw -= recY * g_config.recoilComp;\n' +
+                '        }\n' +
+                '    }\n' +
+                '    float jitterX = (g_rng() % 100) / 100.0f * g_config.jitterAmount * 2 - g_config.jitterAmount;\n' +
+                '    float jitterY = (g_rng() % 100) / 100.0f * g_config.jitterAmount * 2 - g_config.jitterAmount;\n' +
+                '    diffPitch += jitterX;\n' +
+                '    diffYaw += jitterY;\n' +
+                '    float newPitch = curPitch + diffPitch;\n' +
+                '    float newYaw = curYaw + diffYaw;\n' +
+                '    if (newPitch > 89.0f) newPitch = 89.0f;\n' +
+                '    if (newPitch < -89.0f) newPitch = -89.0f;\n' +
+                '    DeepMemory::WriteFloat(g_base + g_offsets.ViewPitch, newPitch);\n' +
+                '    DeepMemory::WriteFloat(g_base + g_offsets.ViewYaw, newYaw);\n' +
+                '}\n\n' +
+                '// ============================================================\n' +
+                '// DEEP UPDATE LOOP\n' +
+                '// ============================================================\n' +
+                'void DeepUpdateLoop(float dt) {\n' +
+                '    if (!g_initialized || !g_enabled) return;\n' +
+                '    if (!g_localPlayer) {\n' +
+                '        uintptr_t gameMgr = DeepMemory::ReadPtr(g_base + g_offsets.GameManager);\n' +
+                '        if (gameMgr) {\n' +
+                '            g_localPlayer = DeepMemory::ReadPtr(gameMgr + g_offsets.LocalPlayer);\n' +
+                '        }\n' +
+                '        return;\n' +
+                '    }\n' +
+                '    DeepAimbot();\n' +
+                '    std::this_thread::sleep_for(std::chrono::milliseconds(2 + (g_rng() % 6)));\n' +
+                '}\n\n' +
+                '// ============================================================\n' +
+                '// HOOK FUNCTIONS\n' +
+                '// ============================================================\n' +
+                'void (*old_PlayerUpdate)(void* player);\n' +
+                'void new_PlayerUpdate(void* player) {\n' +
+                '    static auto lastTime = std::chrono::steady_clock::now();\n' +
+                '    auto now = std::chrono::steady_clock::now();\n' +
+                '    float deltaTime = std::chrono::duration<float>(now - lastTime).count();\n' +
+                '    lastTime = now;\n' +
+                '    old_PlayerUpdate(player);\n' +
+                '    DeepUpdateLoop(deltaTime);\n' +
+                '}\n\n' +
+                '// ============================================================\n' +
+                '// JNI EXPORT - ANDROID\n' +
+                '// ============================================================\n' +
+                'extern "C" JNIEXPORT void JNICALL\n' +
+                'Java_com_linhiuu_deep_Init(JNIEnv* env, jclass clazz, jlong baseAddr) {\n' +
+                '    g_base = (uintptr_t)baseAddr;\n' +
+                '    g_initialized = true;\n' +
+                '    LOGI("[DEEP] Init: 0x%lx", g_base);\n' +
+                '    LOGI("[DEEP] 💖 LINH IUU DEEP HACK ENGINE READY 💖");\n' +
+                '    // DobbyHook((void*)(g_base + g_offsets.PlayerUpdate), (void*)new_PlayerUpdate, (void**)&old_PlayerUpdate);\n' +
+                '}\n\n' +
+                'extern "C" JNIEXPORT void JNICALL\n' +
+                'Java_com_linhiuu_deep_SetEnabled(JNIEnv* env, jclass clazz, jboolean enabled) {\n' +
+                '    g_enabled = enabled;\n' +
+                '    LOGI("[DEEP] Enabled: %s", enabled ? "true" : "false");\n' +
+                '}\n' +
+                '// ============================================================\n';
+
+            document.getElementById('deepCodePreview').textContent = code.substring(0, 800) + '\n... (đã tạo Deep Code)';
+            updateStatus('🧬 Đã tạo Deep Code VIP.');
+        }
+
+        function exportDeepCode() {
+            var code = document.getElementById('deepCodePreview').textContent;
+            if (!code || code.startsWith('🔍')) { updateStatus('⚠️ Tạo Deep Code trước.'); return; }
+            downloadText(code, 'linhiuu_deep_code.txt');
+            updateStatus('📄 Đã xuất Deep Code.');
+        }
+
+        // ============================================================
+        // UTILITY FUNCTIONS
+        // ============================================================
+        function clearInput(id) {
+            document.getElementById(id).value = '';
+            updateStatus('🧹 Đã xóa nội dung.');
+        }
+
+        function clearAll() {
+            document.getElementById('base64Input').value = '';
+            document.getElementById('base64Output').value = '';
+            document.getElementById('hexInput').value = '';
+            document.getElementById('hexOutput').value = '';
+            document.getElementById('cloneInput').value = '';
+            document.getElementById('cloneOutput').value = '';
+            updateStatus('🧹 Đã xóa tất cả.');
+        }
+
+        function copyText(id) {
+            var el = document.getElementById(id);
+            var text = el.value || el.textContent;
+            if (!text) { updateStatus('⚠️ Không có nội dung để sao chép.'); return; }
+            navigator.clipboard.writeText(text).then(function() {
+                updateStatus('📋 Đã sao chép thành công.');
+            }).catch(function() {
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                updateStatus('📋 Đã sao chép (fallback).');
+            });
+        }
+
+        function importFile(event) {
+            var file = event.target.files[0];
+            if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var content = e.target.result;
+                document.getElementById('base64Input').value = content;
+                document.getElementById('hexInput').value = content;
+                updateStatus('📂 Đã nhập file: ' + file.name + ' (' + content.length + ' ký tự)');
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function exportResult() {
+            var result = '';
+            result += '=== LINH IUU BASE64 & HEX STUDIO ===\n';
+            result += 'Thời gian: ' + new Date().toISOString() + '\n\n';
+            result += '--- BASE64 ---\n';
+            result += 'Input: ' + document.getElementById('base64Input').value + '\n';
+            result += 'Output: ' + document.getElementById('base64Output').value + '\n\n';
+            result += '--- HEX ---\n';
+            result += 'Input: ' + document.getElementById('hexInput').value + '\n';
+            result += 'Output: ' + document.getElementById('hexOutput').value + '\n\n';
+            result += '--- CLONE ---\n';
+            result += 'Clone count: ' + document.getElementById('cloneCount').value + '\n';
+            result += 'Clone result: ' + document.getElementById('cloneOutput').value + '\n';
+            downloadText(result, 'linhiuu_export.txt');
+            updateStatus('📤 Đã xuất kết quả.');
+        }
+
+        function downloadText(content, filename) {
+            var blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.download = filename;
+            a.href = url;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 1000);
+        }
+
+        function saveLocal() {
+            try {
+                var data = {
+                    base64Input: document.getElementById('base64Input').value,
+                    hexInput: document.getElementById('hexInput').value,
+                    cloneInput: document.getElementById('cloneInput').value,
+                    cloneCount: document.getElementById('cloneCount').value
+                };
+                localStorage.setItem('linhiuu_b64hex_v16', JSON.stringify(data));
+                updateStatus('💾 Đã lưu vào localStorage.');
+            } catch (e) {
+                updateStatus('❌ Lưu lỗi: ' + e.message);
+            }
+        }
+
+        function loadLocal() {
+            try {
+                var raw = localStorage.getItem('linhiuu_b64hex_v16');
+                if (!raw) { updateStatus('⚠️ Không có dữ liệu lưu.'); return; }
+                var data = JSON.parse(raw);
+                document.getElementById('base64Input').value = data.base64Input || '';
+                document.getElementById('hexInput').value = data.hexInput || '';
+                document.getElementById('cloneInput').value = data.cloneInput || '';
+                document.getElementById('cloneCount').value = data.cloneCount || 5;
+                updateStatus('📂 Đã tải từ localStorage.');
+            } catch (e) {
+                updateStatus('❌ Tải lỗi: ' + e.message);
+            }
+        }
+
+        function updateStatus(msg) {
+            document.getElementById('statusText').innerHTML = msg;
+            document.getElementById('statusTime').textContent = new Date().toLocaleTimeString();
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        function initApp() {
+            try {
+                var savedTheme = localStorage.getItem('linhiuu_theme') || 'dark';
+                setTheme(savedTheme);
+            } catch (e) {}
+
+            updateStatus('💖 Linh Iuu Base64 & Hex Studio sẵn sàng.');
+
+            // Tự động sinh clone code mẫu
+            setTimeout(function() {
+                document.getElementById('cloneInput').value =
+                    'void Hack() {\n    // Đây là code mẫu để nhân bản\n    printf("Linh Iuu VIP\\n");\n}';
+                document.getElementById('cloneCount').value = 5;
+            }, 500);
+        }
+
+        // ============================================================
+        // START
+        // ============================================================
+        document.getElementById('appMain').style.display = 'none';
+        checkLogin();
+    </script>
+</body>
+</html>
