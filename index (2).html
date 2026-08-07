@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>💖 LINH IUU – PURE MERGE STUDIO 💖</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js">
+    </script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg-primary:#0a0015;--bg-secondary:rgba(10,0,25,0.92);--bg-card:rgba(6,0,18,0.7);--bg-input:rgba(0,0,20,0.6);--bg-hover:rgba(255,0,255,0.06);--bg-active:rgba(255,0,255,0.08);--border-color:rgba(255,0,255,0.1);--border-hover:rgba(0,255,255,0.3);--border-input:#3a0a5a;--text-primary:#f0d0ff;--text-secondary:#b080d0;--text-muted:#6a4a7a;--text-accent:#ff44ff;--text-accent2:#00ffff;--shadow:0 30px 80px rgba(0,0,0,0.9);--radius:28px;--radius-sm:16px;--radius-xs:12px;--transition:0.25s cubic-bezier(0.4,0,0.2,1);--gradient-main:linear-gradient(135deg,#ff44ff,#00ffff);--gradient-btn:linear-gradient(135deg,#aa00ff,#4400aa);--gradient-btn-hover:linear-gradient(135deg,#ff44ff,#00ffff);--gradient-card:linear-gradient(145deg,rgba(200,0,255,0.03),rgba(0,0,0,0));--font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+        [data-theme="light"]{--bg-primary:#f0e6f5;--bg-secondary:rgba(255,255,255,0.92);--bg-card:rgba(255,255,255,0.7);--bg-input:rgba(255,255,255,0.8);--bg-hover:rgba(200,0,255,0.05);--bg-active:rgba(200,0,255,0.08);--border-color:rgba(0,0,0,0.06);--border-hover:rgba(200,0,255,0.2);--border-input:#c0a0d0;--text-primary:#1a0a2a;--text-secondary:#6a4a8a;--text-muted:#aa8aaa;--text-accent:#cc44cc;--text-accent2:#00aaaa;--shadow:0 20px 60px rgba(0,0,0,0.08);--gradient-main:linear-gradient(135deg,#cc44cc,#00aaaa);--gradient-btn:linear-gradient(135deg,#aa44aa,#660066);--gradient-btn-hover:linear-gradient(135deg,#cc44cc,#00aaaa);--gradient-card:linear-gradient(145deg,rgba(0,0,0,0.02),rgba(0,0,0,0))}
+        [data-theme="neon"]{--bg-primary:#0a0015;--bg-secondary:rgba(10,0,25,0.92);--bg-card:rgba(6,0,18,0.7);--bg-input:rgba(0,0,20,0.6);--bg-hover:rgba(255,0,255,0.06);--bg-active:rgba(255,0,255,0.08);--border-color:rgba(255,0,255,0.1);--border-hover:rgba(0,255,255,0.3);--border-input:#3a0a5a;--text-primary:#f0d0ff;--text-secondary:#b080d0;--text-muted:#6a4a7a;--text-accent:#ff44ff;--text-accent2:#00ffff;--shadow:0 30px 80px rgba(0,0,0,0.9);--gradient-main:linear-gradient(135deg,#ff44ff,#00ffff);--gradient-btn:linear-gradient(135deg,#aa00ff,#4400aa);--gradient-btn-hover:linear-gradient(135deg,#ff44ff,#00ffff);--gradient-card:linear-gradient(145deg,rgba(200,0,255,0.03),rgba(0,0,0,0))}
+        body{font-family:var(--font);background:var(--bg-primary);color:var(--text-primary);padding:14px;min-height:100vh;display:flex;justify-content:center;transition:background var(--transition),color var(--transition)}
+        ::-webkit-scrollbar{width:5px;height:5px}
+        ::-webkit-scrollbar-track{background:rgba(255,255,255,0.02);border-radius:10px}
+        ::-webkit-scrollbar-thumb{background:var(--text-accent);border-radius:10px}
+        #loginOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-primary);display:flex;justify-content:center;align-items:center;z-index:9999;transition:opacity 0.6s ease,transform 0.6s ease;backdrop-filter:blur(10px)}
+        #loginOverlay.hidden{opacity:0;pointer-events:none;transform:scale(1.05)}
+        .login-container{background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius);padding:40px 36px;max-width:420px;width:100%;box-shadow:var(--shadow);backdrop-filter:blur(20px);animation:fadeInUp 0.5s ease}
+        .login-container .logo{text-align:center;margin-bottom:28px}
+        .login-container .logo i{font-size:48px;color:var(--text-accent);filter:drop-shadow(0 0 20px var(--text-accent))}
+        .login-container .logo h2{font-size:24px;font-weight:800;background:var(--gradient-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-top:6px}
+        .login-container .logo p{font-size:14px;color:var(--text-muted);margin-top:4px}
+        .login-container .form-group{margin-bottom:18px}
+        .login-container .form-group label{display:block;font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:4px}
+        .login-container .form-group input{width:100%;padding:12px 16px;background:var(--bg-input);border:1px solid var(--border-input);border-radius:var(--radius-xs);color:var(--text-primary);font-size:15px;outline:none;transition:var(--transition)}
+        .login-container .form-group input:focus{border-color:var(--text-accent);box-shadow:0 0 0 3px rgba(255,68,255,0.06)}
+        .login-container .btn-login{width:100%;padding:14px;background:var(--gradient-btn);border:none;border-radius:var(--radius-xs);color:#fff;font-size:18px;font-weight:700;cursor:pointer;transition:var(--transition);margin-top:6px}
+        .login-container .btn-login:hover{background:var(--gradient-btn-hover);transform:scale(1.02);box-shadow:0 6px 24px rgba(255,68,255,0.2)}
+        .login-container .error-msg{color:#ff4466;font-size:13px;margin-top:10px;text-align:center;min-height:24px}
+        .login-container .footer-login{text-align:center;font-size:12px;color:var(--text-muted);margin-top:16px}
+        .app{max-width:1900px;width:100%;background:var(--bg-secondary);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:var(--radius);padding:28px 26px;border:1px solid var(--border-color);box-shadow:var(--shadow);position:relative;transition:all var(--transition)}
+        .app::before{content:'';position:absolute;top:-25%;left:-5%;width:55%;height:80%;background:radial-gradient(circle,rgba(255,0,200,0.03)0%,transparent 70%);pointer-events:none;z-index:0}
+        .header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:24px;gap:14px;position:relative;z-index:1}
+        .logo{display:flex;align-items:center;gap:14px}
+        .logo i{font-size:34px;color:var(--text-accent);filter:drop-shadow(0 0 16px var(--text-accent))}
+        .logo h1{font-size:28px;font-weight:900;background:var(--gradient-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-0.5px}
+        .logo span{font-size:14px;font-weight:400;color:var(--text-muted);-webkit-text-fill-color:var(--text-muted);margin-left:6px}
+        .header-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+        .theme-selector{display:flex;gap:4px;background:var(--bg-card);padding:4px;border-radius:40px;border:1px solid var(--border-color);backdrop-filter:blur(4px)}
+        .theme-selector button{background:transparent;border:none;color:var(--text-muted);padding:5px 12px;border-radius:30px;font-size:13px;font-weight:500;cursor:pointer;transition:var(--transition)}
+        .theme-selector button.active{background:var(--text-accent);color:#000;box-shadow:0 0 16px var(--text-accent)}
+        .theme-selector button:hover{color:var(--text-primary)}
+        .badge-pro{background:rgba(255,0,204,0.12);border:1px solid #ff44aa;color:#ff88dd;padding:6px 20px;border-radius:60px;font-size:13px;font-weight:700;letter-spacing:0.5px;backdrop-filter:blur(4px)}
+        .badge-pro i{margin-right:6px}
+        .btn-logout{background:rgba(255,0,0,0.08);border:1px solid rgba(255,0,0,0.2);color:#ff6666;padding:6px 16px;border-radius:40px;font-size:13px;font-weight:500;cursor:pointer;transition:var(--transition);display:inline-flex;align-items:center;gap:6px;backdrop-filter:blur(4px)}
+        .btn-logout:hover{background:rgba(255,0,0,0.12);border-color:#ff6666;color:#ff8888}
+        .toolbar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px;position:relative;z-index:1}
+        .toolbar button,.toolbar label{background:var(--bg-card);border:1px solid var(--border-color);color:var(--text-secondary);padding:7px 14px;border-radius:40px;font-size:13px;font-weight:500;cursor:pointer;transition:var(--transition);display:inline-flex;align-items:center;gap:8px;backdrop-filter:blur(4px);white-space:nowrap}
+        .toolbar button:hover{background:var(--bg-hover);border-color:var(--border-hover);color:var(--text-primary);transform:translateY(-1px)}
+        .toolbar button i{color:var(--text-accent)}
+        .toolbar input[type="file"]{display:none}
+        .toolbar .sep{width:1px;background:var(--border-color);margin:0 4px}
+        .main-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr;gap:15px;position:relative;z-index:1}
+        @media(max-width:1700px){.main-grid{grid-template-columns:1fr 1fr 1fr}}
+        @media(max-width:1100px){.main-grid{grid-template-columns:1fr 1fr}}
+        @media(max-width:768px){.main-grid{grid-template-columns:1fr}}
+        .card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius);padding:18px 20px;backdrop-filter:blur(4px);transition:all var(--transition);background-image:var(--gradient-card)}
+        .card:hover{border-color:var(--border-hover)}
+        .card-title{display:flex;align-items:center;gap:12px;font-weight:600;color:var(--text-secondary);margin-bottom:14px;font-size:15px;letter-spacing:0.2px}
+        .card-title i{color:var(--text-accent);font-size:18px}
+        .card-title .badge-count{background:rgba(255,68,255,0.06);color:var(--text-accent);padding:2px 14px;border-radius:40px;font-size:12px;font-weight:700;margin-left:auto}
+        .form-group{margin-bottom:2px}
+        .form-group label{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:500;color:var(--text-secondary);margin-bottom:3px;text-transform:uppercase;letter-spacing:0.3px}
+        .form-group label i{color:var(--text-accent);width:16px;font-size:13px}
+        .form-control{width:100%;padding:8px 12px;background:var(--bg-input);border:1px solid var(--border-input);border-radius:var(--radius-xs);color:var(--text-primary);font-size:13px;transition:var(--transition);outline:none;font-family:'Fira Code',monospace}
+        .form-control:focus{border-color:var(--text-accent);box-shadow:0 0 0 3px rgba(255,68,255,0.06)}
+        .form-control::placeholder{color:var(--text-muted)}
+        textarea.form-control{min-height:100px;resize:vertical;font-size:12px}
+        .row{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+        .row>*{flex:1;min-width:70px}
+        .btn{background:var(--bg-card);border:1px solid var(--border-color);color:var(--text-secondary);padding:6px 12px;border-radius:30px;font-size:11px;font-weight:500;cursor:pointer;transition:var(--transition);display:inline-flex;align-items:center;gap:4px;backdrop-filter:blur(4px);white-space:nowrap}
+        .btn:hover{background:var(--bg-hover);border-color:var(--border-hover);color:var(--text-primary);transform:translateY(-1px)}
+        .btn i{color:var(--text-accent)}
+        .btn-primary{background:var(--gradient-btn);color:#fff;border:none}
+        .btn-primary:hover{background:var(--gradient-btn-hover)}
+        .btn-primary i{color:#fff}
+        .btn-gold{border-color:#ffd700;color:#ffd700}
+        .btn-gold:hover{background:#ffd700;color:#000}
+        .btn-sm{padding:4px 8px;font-size:10px}
+        .btn-danger{border-color:#ff2244;color:#ff2244}
+        .btn-danger:hover{background:#ff2244;color:#fff}
+        .btn-sha{border-color:#44ff88;color:#44ff88}
+        .btn-sha:hover{background:#44ff88;color:#000}
+        .btn-green{border-color:#00ff88;color:#00ff88}
+        .btn-green:hover{background:#00ff88;color:#000}
+        .btn-orange{border-color:#ff8800;color:#ff8800}
+        .btn-orange:hover{background:#ff8800;color:#000}
+        .btn-cyan{border-color:#00ccff;color:#00ccff}
+        .btn-cyan:hover{background:#00ccff;color:#000}
+        .preview-box{background:var(--bg-input);border:1px solid var(--border-input);border-radius:var(--radius-sm);padding:14px;max-height:350px;overflow:auto;font-family:'Fira Code',monospace;font-size:11px;color:var(--text-secondary);white-space:pre-wrap;word-break:break-all;transition:var(--transition);line-height:1.5}
+        .status-bar{margin-top:18px;padding:10px 18px;background:var(--bg-card);border-radius:40px;border-left:6px solid var(--text-accent2);color:var(--text-secondary);display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:13px;position:relative;z-index:1;border:1px solid var(--border-color)}
+        .status-bar .dot{width:8px;height:8px;border-radius:50%;background:var(--text-accent);animation:pulse 1.5s infinite}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
+        .status-bar .status-text{flex:1}
+        .status-bar .status-time{font-size:11px;color:var(--text-muted)}
+        .footer{margin-top:18px;padding-top:14px;border-top:1px solid var(--border-color);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--text-muted);position:relative;z-index:1}
+        .footer a{color:var(--text-accent);text-decoration:none;font-weight:500}
+        .footer a:hover{text-decoration:underline}
+        .hash-result{background:#0a0a0a;border:1px solid #2a1a2a;border-radius:8px;padding:10px;font-family:'Fira Code',monospace;font-size:11px;color:#44ff88;white-space:pre-wrap;word-break:break-all;margin-top:6px;max-height:80px;overflow:auto}
+        .file-list{background:var(--bg-input);border:1px solid var(--border-input);border-radius:var(--radius-xs);padding:8px;max-height:200px;overflow:auto;font-size:12px;color:var(--text-secondary)}
+        .file-list .file-item{display:flex;justify-content:space-between;align-items:center;padding:4px 8px;border-bottom:1px solid var(--border-color)}
+        .file-list .file-item:last-child{border-bottom:none}
+        .file-list .file-item .fname{color:var(--text-primary);font-family:monospace;font-size:11px}
+        .file-list .file-item .fsize{color:var(--text-muted);font-size:10px}
+        .file-list .file-item .fdel{color:#ff4466;cursor:pointer;padding:0 6px}
+        .file-list .file-item .fdel:hover{color:#ff88aa}
+        .mt-10{margin-top:10px}
+        .mt-5{margin-top:5px}
+        .mb-5{margin-bottom:5px}
+        @media(max-width:640px){.app{padding:14px 10px;border-radius:24px}.main-grid{grid-template-columns:1fr}.logo h1{font-size:20px}.logo span{display:none}.toolbar button{font-size:11px;padding:5px 10px}.badge-pro{font-size:9px;padding:3px 12px}.theme-selector button{font-size:10px;padding:3px 8px}.login-container{padding:24px 18px;margin:14px}.row{flex-direction:column}}
+    </style>
+</head>
+<body>
+    <!-- LOGIN -->
+    <div id="loginOverlay">
+        <div class="login-container">
+            <div class="logo"><i class="fas fa-crown"></i><h2>💖 LINH IUU STUDIO</h2><p>Nhập key để kích hoạt VIP</p></div>
+            <div class="form-group"><label><i class="fas fa-key"></i> License Key</label><input type="text" id="loginKey" placeholder="Nhập key..." value="ANOS2026"></div>
+            <button class="btn-login" onclick="handleLogin()"><i class="fas fa-unlock"></i> Kích hoạt</button>
+            <div class="error-msg" id="loginError"></div>
+            <div class="footer-login"><span>Key mặc định: <strong style="color:#ff44ff;">ANOS2026</strong></span></div>
+        </div>
+    </div>
+
+    <!-- APP -->
+    <div class="app" id="appMain" style="display:none;">
+        <div class="header">
+            <div class="logo"><i class="fas fa-heart" style="color:#ff44ff;"></i><h1>Linh Iuu <span>Pure Merge · No Metadata</span></h1></div>
+            <div class="header-actions">
+                <div class="theme-selector" id="themeSelector">
+                    <button data-theme="dark" class="active" onclick="setTheme('dark')"><i class="fas fa-moon"></i></button>
+                    <button data-theme="light" onclick="setTheme('light')"><i class="fas fa-sun"></i></button>
+                    <button data-theme="neon" onclick="setTheme('neon')"><i class="fas fa-bolt"></i></button>
+                </div>
+                <button class="btn-logout" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
+                <div class="badge-pro"><i class="fas fa-star"></i> Linh Iuu · v22.0 · Pure Output</div>
+            </div>
+        </div>
+
+        <div class="toolbar">
+            <button onclick="clearAll()"><i class="fas fa-eraser"></i> Xóa tất cả</button>
+            <button onclick="exportResult()"><i class="fas fa-file-export"></i> Xuất kết quả</button>
+            <button onclick="document.getElementById('importFile').click()"><i class="fas fa-file-import"></i> Nhập file</button>
+            <input type="file" id="importFile" accept=".txt,.bin,.hex,.cpp,.c,.h,.java,.js,.py,.cs" onchange="importFile(event)" />
+            <span class="sep"></span>
+            <button onclick="saveLocal()"><i class="fas fa-save"></i> Lưu</button>
+            <button onclick="loadLocal()"><i class="fas fa-upload"></i> Tải</button>
+            <span class="sep"></span>
+            <button onclick="generateDeepCode()" style="border-color:#ff44ff;color:#ff44ff;"><i class="fas fa-skull"></i> Tạo Deep Code</button>
+        </div>
+
+        <div class="main-grid">
+            <!-- CỘT 1: Base64 -->
+            <div><div class="card"><div class="card-title"><i class="fas fa-lock"></i> Base64 <span class="badge-count">Encode/Decode</span></div>
+                <div class="form-group"><label><i class="fas fa-arrow-right"></i> Input</label><textarea class="form-control" id="base64Input" placeholder="Dán text hoặc Base64..."></textarea></div>
+                <div class="row"><button onclick="base64Encode()" class="btn btn-primary"><i class="fas fa-lock"></i> Encode</button><button onclick="base64Decode()" class="btn btn-gold"><i class="fas fa-unlock"></i> Decode</button><button onclick="clearInput('base64Input')" class="btn btn-danger"><i class="fas fa-times"></i> Xóa</button></div>
+                <div class="form-group mt-10"><label><i class="fas fa-arrow-left"></i> Output</label><textarea class="form-control" id="base64Output" placeholder="Kết quả..." style="min-height:80px;"></textarea></div>
+                <button onclick="copyText('base64Output')" class="btn btn-sm"><i class="fas fa-copy"></i> Sao chép</button>
+            </div></div>
+
+            <!-- CỘT 2: Hex -->
+            <div><div class="card"><div class="card-title"><i class="fas fa-code"></i> Hex Stream <span class="badge-count">Hex ↔ Text</span></div>
+                <div class="form-group"><label><i class="fas fa-arrow-right"></i> Input</label><textarea class="form-control" id="hexInput" placeholder="Dán text hoặc Hex..."></textarea></div>
+                <div class="row"><button onclick="hexEncode()" class="btn btn-primary"><i class="fas fa-code"></i> Text→Hex</button><button onclick="hexDecode()" class="btn btn-gold"><i class="fas fa-undo"></i> Hex→Text</button><button onclick="clearInput('hexInput')" class="btn btn-danger"><i class="fas fa-times"></i> Xóa</button></div>
+                <div class="form-group mt-10"><label><i class="fas fa-arrow-left"></i> Output</label><textarea class="form-control" id="hexOutput" placeholder="Kết quả..." style="min-height:80px;"></textarea></div>
+                <button onclick="copyText('hexOutput')" class="btn btn-sm"><i class="fas fa-copy"></i> Sao chép</button>
+            </div></div>
+
+            <!-- CỘT 3: SHA256 -->
+            <div><div class="card"><div class="card-title"><i class="fas fa-fingerprint"></i> SHA256 <span class="badge-count">Hash VIP</span></div>
+                <div class="form-group"><label><i class="fas fa-arrow-right"></i> Input</label><textarea class="form-control" id="shaInput" placeholder="Dán text cần hash SHA256..."></textarea></div>
+                <div class="row"><button onclick="sha256Hash()" class="btn btn-sha"><i class="fas fa-fingerprint"></i> SHA256</button><button onclick="sha256Salt()" class="btn btn-gold"><i class="fas fa-key"></i> SHA256 + Salt</button><button onclick="clearInput('shaInput')" class="btn btn-danger"><i class="fas fa-times"></i> Xóa</button></div>
+                <div class="form-group mt-10"><label><i class="fas fa-arrow-left"></i> Kết quả Hash</label><div class="hash-result" id="shaOutput">🔍 Nhấn "SHA256" để tạo hash...</div></div>
+                <div class="row"><button onclick="copyText('shaOutput')" class="btn btn-sm"><i class="fas fa-copy"></i> Sao chép</button><button onclick="clearInput('shaOutput')" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Xóa</button></div>
+                <div class="form-group mt-10"><label><i class="fas fa-check-circle"></i> So sánh hash</label><input class="form-control" id="shaCompare" placeholder="Dán hash cần so sánh..." style="min-height:40px;font-size:11px;"><button onclick="compareSHA()" class="btn btn-sm mt-10" style="width:100%;"><i class="fas fa-balance-scale"></i> So sánh</button></div>
+            </div></div>
+
+            <!-- CỘT 4: Clone -->
+            <div><div class="card"><div class="card-title"><i class="fas fa-copy"></i> Nhân bản code <span class="badge-count">Clone VIP</span></div>
+                <div class="form-group"><label><i class="fas fa-arrow-right"></i> Code gốc</label><textarea class="form-control" id="cloneInput" placeholder="Dán code cần nhân bản..." style="min-height:80px;"></textarea></div>
+                <div class="row"><div style="flex:1;"><label style="font-size:10px;color:var(--text-muted);">Số lần</label><input type="number" id="cloneCount" value="5" min="1" max="999" class="form-control" style="padding:4px 8px;"></div><div style="flex:1;display:flex;align-items:flex-end;"><button onclick="cloneCode()" class="btn btn-gold" style="width:100%;"><i class="fas fa-copy"></i> Nhân bản</button></div></div>
+                <div class="form-group mt-10"><label><i class="fas fa-arrow-left"></i> Kết quả (liền nhau)</label><textarea class="form-control" id="cloneOutput" placeholder="Kết quả nhân bản..." style="min-height:100px;"></textarea></div>
+                <div class="row"><button onclick="copyText('cloneOutput')" class="btn btn-primary"><i class="fas fa-copy"></i> Sao chép tất cả</button><button onclick="clearInput('cloneOutput')" class="btn btn-danger"><i class="fas fa-times"></i> Xóa</button></div>
+            </div></div>
+
+            <!-- CỘT 5: Multi-File Encrypt - PURE OUTPUT -->
+            <div><div class="card"><div class="card-title"><i class="fas fa-folder-open"></i> Multi-File <span class="badge-count">Encrypt/Decrypt</span></div>
+                <div class="form-group"><label><i class="fas fa-upload"></i> Chọn nhiều file</label><input type="file" id="multiFileInput" multiple onchange="handleMultiFiles(event)" style="width:100%;padding:6px;background:var(--bg-input);border:1px solid var(--border-input);border-radius:var(--radius-xs);color:var(--text-primary);"></div>
+                <div class="form-group mt-5"><label><i class="fas fa-key"></i> Mật khẩu</label><input class="form-control" id="encryptPassword" placeholder="Nhập mật khẩu..." value="linhiuu2026" style="min-height:30px;font-size:12px;"></div>
+                <div class="row"><button onclick="encryptMultiFiles()" class="btn btn-green"><i class="fas fa-lock"></i> Mã hóa</button><button onclick="decryptMultiFiles()" class="btn btn-orange"><i class="fas fa-unlock"></i> Giải mã</button><button onclick="clearMultiFiles()" class="btn btn-danger"><i class="fas fa-trash"></i> Xóa</button></div>
+                <div class="form-group mt-5"><label><i class="fas fa-list"></i> Danh sách (<span id="fileCount">0</span>)</label><div class="file-list" id="fileListContainer"><div style="color:var(--text-muted);text-align:center;padding:12px;font-size:12px;">Chưa có file nào</div></div></div>
+                <div class="form-group mt-5"><label><i class="fas fa-arrow-left"></i> Kết quả (PURE - không metadata)</label><textarea class="form-control" id="multiFileOutput" placeholder="Kết quả mã hóa/giải mã..." style="min-height:80px;"></textarea></div>
+                <div class="row"><button onclick="copyText('multiFileOutput')" class="btn btn-primary"><i class="fas fa-copy"></i> Sao chép</button><button onclick="exportMultiFiles()" class="btn btn-gold"><i class="fas fa-file-export"></i> Xuất</button></div>
+            </div></div>
+
+            <!-- CỘT 6: Pure Merge -->
+            <div><div class="card"><div class="card-title"><i class="fas fa-code-merge"></i> Pure Merge <span class="badge-count" id="codeBaseCount">0 files</span></div>
+                <div class="form-group"><label><i class="fas fa-plus-circle"></i> Thêm file</label><input type="file" id="codeBaseInput" multiple onchange="addCodeFiles(event)" style="width:100%;padding:6px;background:var(--bg-input);border:1px solid var(--border-input);border-radius:var(--radius-xs);color:var(--text-primary);"></div>
+                <div class="form-group mt-5"><label><i class="fas fa-tasks"></i> Danh sách</label><div class="file-list" id="codeBaseList" style="max-height:180px;"><div style="color:var(--text-muted);text-align:center;padding:12px;font-size:12px;">Chưa có file nào</div></div></div>
+                <div class="row"><button onclick="mergeCodeBase()" class="btn btn-cyan"><i class="fas fa-code-merge"></i> Merge</button><button onclick="exportCodeBase()" class="btn btn-gold"><i class="fas fa-file-export"></i> Xuất</button><button onclick="clearCodeBase()" class="btn btn-danger"><i class="fas fa-trash"></i> Xóa</button></div>
+                <div class="form-group mt-5"><label><i class="fas fa-arrow-left"></i> Code merged (PURE - KHÔNG GHI CHÚ)</label><textarea class="form-control" id="codeBaseOutput" placeholder="Kết quả merge - chỉ code thuần..." style="min-height:120px;"></textarea></div>
+                <div class="form-group mt-5"><label><i class="fas fa-fingerprint"></i> Master SHA256</label><div class="hash-result" id="masterHashOutput">🔍 Merge để tạo master hash...</div></div>
+                <div class="row"><button onclick="copyText('codeBaseOutput')" class="btn btn-primary"><i class="fas fa-copy"></i> Sao chép</button><button onclick="clearInput('codeBaseOutput')" class="btn btn-danger"><i class="fas fa-times"></i> Xóa</button></div>
+            </div></div>
+        </div>
+
+        <!-- DEEP CODE -->
+        <div class="card mt-10"><div class="card-title"><i class="fas fa-skull"></i> Deep Code Viewer <span class="badge-count">VIP Logic + SHA256</span></div>
+            <div class="preview-box" id="deepCodePreview" style="max-height:250px;">🔍 Nhấn "Tạo Deep Code" để sinh code hack sâu nhất tích hợp SHA256.</div>
+            <div class="row"><button onclick="generateDeepCode()" class="btn btn-primary"><i class="fas fa-skull"></i> Tạo Deep Code</button><button onclick="copyText('deepCodePreview')" class="btn btn-gold"><i class="fas fa-copy"></i> Sao chép</button><button onclick="exportDeepCode()" class="btn"><i class="fas fa-file-export"></i> Xuất .txt</button></div>
+        </div>
+
+        <!-- STATUS -->
+        <div class="status-bar"><span class="dot"></span><span class="status-text" id="statusText">💖 Linh Iuu · Pure Output · Không metadata · v22.0</span><span class="status-time" id="statusTime"></span></div>
+
+        <!-- FOOTER -->
+        <div class="footer"><span><i class="fas fa-heart" style="color:#ff44ff;"></i> Linh Iuu · Pure Output · v22.0</span><span><i class="fas fa-bolt"></i> Merge & Encrypt không metadata</span><a href="#" onclick="location.reload();return false;"><i class="fas fa-undo-alt"></i> Reload</a></div>
+    </div>
+
+    <script>
+        // ============================================================
+        // LOGIN
+        // ============================================================
+        var LICENSE_KEY = 'ANOS2026';
+
+        function checkLogin() {
+            var loginOverlay = document.getElementById('loginOverlay');
+            var appMain = document.getElementById('appMain');
+            try {
+                var logged = localStorage.getItem('linhiuu_logged_in');
+                if (logged === 'true') {
+                    loginOverlay.classList.add('hidden');
+                    appMain.style.display = 'block';
+                    initApp();
+                    return;
+                }
+            } catch (e) {
+                loginOverlay.classList.add('hidden');
+                appMain.style.display = 'block';
+                initApp();
+                return;
+            }
+            loginOverlay.classList.remove('hidden');
+            appMain.style.display = 'none';
+        }
+
+        function handleLogin() {
+            var keyInput = document.getElementById('loginKey');
+            var errorEl = document.getElementById('loginError');
+            var key = keyInput.value.trim();
+            if (key === LICENSE_KEY) {
+                try { localStorage.setItem('linhiuu_logged_in', 'true'); } catch (e) {}
+                document.getElementById('loginOverlay').classList.add('hidden');
+                document.getElementById('appMain').style.display = 'block';
+                errorEl.textContent = '';
+                keyInput.value = '';
+                initApp();
+            } else {
+                errorEl.textContent = '❌ Key không hợp lệ! Vui lòng thử lại.';
+                keyInput.value = '';
+                keyInput.focus();
+            }
+        }
+
+        function handleLogout() {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                try { localStorage.removeItem('linhiuu_logged_in'); } catch (e) {}
+                document.getElementById('loginOverlay').classList.remove('hidden');
+                document.getElementById('appMain').style.display = 'none';
+                document.getElementById('loginError').textContent = '';
+                document.getElementById('loginKey').value = '';
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                var loginOverlay = document.getElementById('loginOverlay');
+                if (!loginOverlay.classList.contains('hidden')) { handleLogin(); }
+            }
+        });
+
+        // ============================================================
+        // THEME
+        // ============================================================
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            var btns = document.querySelectorAll('.theme-selector button');
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].classList.toggle('active', btns[i].dataset.theme === theme);
+            }
+            try { localStorage.setItem('linhiuu_theme', theme); } catch (e) {}
+        }
+
+        // ============================================================
+        // BASE64
+        // ============================================================
+        function base64Encode() {
+            var input = document.getElementById('base64Input').value;
+            if (!input) { updateStatus('⚠️ Vui lòng nhập dữ liệu.'); return; }
+            try {
+                var encoded = btoa(unescape(encodeURIComponent(input)));
+                document.getElementById('base64Output').value = encoded;
+                updateStatus('✅ Mã hóa Base64 thành công. Độ dài: ' + encoded.length);
+            } catch (e) { updateStatus('❌ Lỗi mã hóa: ' + e.message); }
+        }
+
+        function base64Decode() {
+            var input = document.getElementById('base64Input').value;
+            if (!input) { updateStatus('⚠️ Vui lòng nhập dữ liệu.'); return; }
+            try {
+                var decoded = decodeURIComponent(escape(atob(input)));
+                document.getElementById('base64Output').value = decoded;
+                updateStatus('✅ Giải mã Base64 thành công. Độ dài: ' + decoded.length);
+            } catch (e) { updateStatus('❌ Lỗi giải mã: ' + e.message); }
+        }
+
+        // ============================================================
+        // HEX
+        // ============================================================
+        function hexEncode() {
+            var input = document.getElementById('hexInput').value;
+            if (!input) { updateStatus('⚠️ Vui lòng nhập dữ liệu.'); return; }
+            try {
+                var hex = '';
+                for (var i = 0; i < input.length; i++) {
+                    hex += input.charCodeAt(i).toString(16).padStart(2, '0').toUpperCase();
+                }
+                document.getElementById('hexOutput').value = hex;
+                updateStatus('✅ Text → Hex thành công. Độ dài: ' + hex.length);
+            } catch (e) { updateStatus('❌ Lỗi chuyển đổi: ' + e.message); }
+        }
+
+        function hexDecode() {
+            var input = document.getElementById('hexInput').value.replace(/\s/g, '');
+            if (!input) { updateStatus('⚠️ Vui lòng nhập dữ liệu.'); return; }
+            if (input.length % 2 !== 0) { updateStatus('❌ Hex không hợp lệ.'); return; }
+            try {
+                var text = '';
+                for (var i = 0; i < input.length; i += 2) {
+                    text += String.fromCharCode(parseInt(input.substr(i, 2), 16));
+                }
+                document.getElementById('hexOutput').value = text;
+                updateStatus('✅ Hex → Text thành công. Độ dài: ' + text.length);
+            } catch (e) { updateStatus('❌ Lỗi chuyển đổi: ' + e.message); }
+        }
+
+        // ============================================================
+        // SHA256
+        // ============================================================
+        function sha256Hash() {
+            var input = document.getElementById('shaInput').value;
+            if (!input) { updateStatus('⚠️ Vui lòng nhập dữ liệu.'); return; }
+            try {
+                var hash = CryptoJS.SHA256(input).toString(CryptoJS.enc.Hex);
+                document.getElementById('shaOutput').textContent = hash;
+                updateStatus('✅ SHA256 Hash thành công. Độ dài: ' + hash.length + ' ký tự.');
+            } catch (e) { updateStatus('❌ Lỗi SHA256: ' + e.message); }
+        }
+
+        function sha256Salt() {
+            var input = document.getElementById('shaInput').value;
+            if (!input) { updateStatus('⚠️ Vui lòng nhập dữ liệu.'); return; }
+            var salt = prompt('Nhập Salt (để trống nếu không):') || 'linhiuu_salt_2026';
+            try {
+                var hash = CryptoJS.SHA256(input + salt).toString(CryptoJS.enc.Hex);
+                document.getElementById('shaOutput').textContent = 'Salt: ' + salt + '\nHash: ' + hash;
+                updateStatus('✅ SHA256 + Salt thành công. Salt: ' + salt);
+            } catch (e) { updateStatus('❌ Lỗi SHA256: ' + e.message); }
+        }
+
+        function compareSHA() {
+            var hash1 = document.getElementById('shaOutput').textContent;
+            var hash2 = document.getElementById('shaCompare').value.trim();
+            if (!hash1 || hash1.includes('🔍')) { updateStatus('⚠️ Chưa có hash để so sánh.'); return; }
+            if (!hash2) { updateStatus('⚠️ Vui lòng dán hash cần so sánh.'); return; }
+            var realHash = hash1;
+            if (hash1.includes('Hash: ')) {
+                var parts = hash1.split('\n');
+                for (var i = 0; i < parts.length; i++) {
+                    if (parts[i].includes('Hash: ')) {
+                        realHash = parts[i].replace('Hash: ', '').trim();
+                        break;
+                    }
+                }
+            }
+            if (realHash === hash2) { updateStatus('✅ HASH KHỚP! Dữ liệu chính xác.'); } 
+            else { updateStatus('❌ HASH KHÔNG KHỚP! Dữ liệu bị thay đổi.'); }
+        }
+
+        // ============================================================
+        // CLONE
+        // ============================================================
+        function cloneCode() {
+            var input = document.getElementById('cloneInput').value;
+            var count = parseInt(document.getElementById('cloneCount').value) || 5;
+            if (!input) { updateStatus('⚠️ Vui lòng nhập code cần nhân bản.'); return; }
+            if (count < 1) { count = 1; }
+            if (count > 999) { count = 999; }
+            var result = '';
+            for (var i = 0; i < count; i++) {
+                result += input;
+            }
+            document.getElementById('cloneOutput').value = result;
+            updateStatus('✅ Nhân bản thành công ' + count + ' lần. Tổng: ' + result.length + ' ký tự.');
+        }
+
+        // ============================================================
+        // MULTI-FILE ENCRYPT - PURE OUTPUT (KHÔNG METADATA)
+        // ============================================================
+        var fileData = [];
+
+        function handleMultiFiles(event) {
+            var files = event.target.files;
+            for (var i = 0; i < files.length; i++) {
+                var reader = new FileReader();
+                reader.onload = (function(file) {
+                    return function(e) {
+                        fileData.push({
+                            name: file.name,
+                            size: file.size,
+                            content: e.target.result
+                        });
+                        updateFileList();
+                        updateStatus('📂 Đã thêm file: ' + file.name);
+                    };
+                })(files[i]);
+                reader.readAsText(files[i]);
+            }
+            event.target.value = '';
+        }
+
+        function updateFileList() {
+            var container = document.getElementById('fileListContainer');
+            var count = document.getElementById('fileCount');
+            count.textContent = fileData.length;
+            if (fileData.length === 0) {
+                container.innerHTML = '<div style="color:var(--text-muted);text-align:center;padding:12px;font-size:12px;">Chưa có file nào</div>';
+                return;
+            }
+            var html = '';
+            for (var i = 0; i < fileData.length; i++) {
+                var f = fileData[i];
+                html += '<div class="file-item">' +
+                    '<span class="fname">' + f.name + '</span>' +
+                    '<span class="fsize">' + f.size + ' bytes</span>' +
+                    '<span class="fdel" onclick="removeFile(' + i + ')"><i class="fas fa-times-circle"></i></span>' +
+                    '</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        function removeFile(index) {
+            fileData.splice(index, 1);
+            updateFileList();
+            updateStatus('🗑️ Đã xóa file.');
+        }
+
+        function clearMultiFiles() {
+            fileData = [];
+            updateFileList();
+            document.getElementById('multiFileOutput').value = '';
+            updateStatus('🧹 Đã xóa tất cả file.');
+        }
+
+        function encryptMultiFiles() {
+            if (fileData.length === 0) { updateStatus('⚠️ Chưa có file nào.'); return; }
+            var password = document.getElementById('encryptPassword').value || 'linhiuu2026';
+            try {
+                var result = '';
+                for (var i = 0; i < fileData.length; i++) {
+                    var f = fileData[i];
+                    var encrypted = CryptoJS.AES.encrypt(f.content, password).toString();
+                    result += encrypted + '\n';
+                }
+                document.getElementById('multiFileOutput').value = result.trim();
+                updateStatus('🔐 Đã mã hóa ' + fileData.length + ' file. (Không metadata)');
+            } catch (e) {
+                updateStatus('❌ Lỗi mã hóa: ' + e.message);
+            }
+        }
+
+        function decryptMultiFiles() {
+            var input = document.getElementById('multiFileOutput').value;
+            if (!input) { updateStatus('⚠️ Không có dữ liệu.'); return; }
+            var password = document.getElementById('encryptPassword').value || 'linhiuu2026';
+            try {
+                var lines = input.split('\n').filter(function(line) { return line.trim() !== ''; });
+                var result = '';
+                for (var i = 0; i < lines.length; i++) {
+                    try {
+                        var decrypted = CryptoJS.AES.decrypt(lines[i].trim(), password).toString(CryptoJS.enc.Utf8);
+                        result += decrypted + '\n';
+                    } catch (e) {
+                        result += '[DECRYPT FAILED]\n';
+                    }
+                }
+                document.getElementById('multiFileOutput').value = result.trim();
+                updateStatus('🔓 Đã giải mã thành công.');
+            } catch (e) {
+                updateStatus('❌ Lỗi giải mã: ' + e.message);
+            }
+        }
+
+        function exportMultiFiles() {
+            var content = document.getElementById('multiFileOutput').value;
+            if (!content) { updateStatus('⚠️ Không có dữ liệu.'); return; }
+            downloadText(content, 'linhiuu_encrypted.txt');
+            updateStatus('📤 Đã xuất.');
+        }
+
+        // ============================================================
+        // PURE MERGE - KHÔNG GHI CHÚ, KHÔNG METADATA
+        // ============================================================
+        var codeFiles = [];
+
+        function addCodeFiles(event) {
+            var files = event.target.files;
+            for (var i = 0; i < files.length; i++) {
+                var reader = new FileReader();
+                reader.onload = (function(file) {
+                    return function(e) {
+                        codeFiles.push({
+                            name: file.name,
+                            size: file.size,
+                            content: e.target.result
+                        });
+                        updateCodeBaseList();
+                        updateStatus('📂 Đã thêm: ' + file.name);
+                    };
+                })(files[i]);
+                reader.readAsText(files[i]);
+            }
+            event.target.value = '';
+        }
+
+        function updateCodeBaseList() {
+            var container = document.getElementById('codeBaseList');
+            var count = document.getElementById('codeBaseCount');
+            count.textContent = codeFiles.length + ' files';
+            if (codeFiles.length === 0) {
+                container.innerHTML = '<div style="color:var(--text-muted);text-align:center;padding:12px;font-size:12px;">Chưa có file nào</div>';
+                return;
+            }
+            var html = '';
+            for (var i = 0; i < codeFiles.length; i++) {
+                var f = codeFiles[i];
+                html += '<div class="file-item">' +
+                    '<span class="fname">' + f.name + '</span>' +
+                    '<span class="fsize">' + f.size + 'b</span>' +
+                    '<span class="fdel" onclick="removeCodeFile(' + i + ')"><i class="fas fa-times-circle"></i></span>' +
+                    '</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        function removeCodeFile(index) {
+            codeFiles.splice(index, 1);
+            updateCodeBaseList();
+            updateStatus('🗑️ Đã xóa.');
+        }
+
+        function clearCodeBase() {
+            codeFiles = [];
+            updateCodeBaseList();
+            document.getElementById('codeBaseOutput').value = '';
+            document.getElementById('masterHashOutput').textContent = '🔍 Merge để tạo master hash...';
+            updateStatus('🧹 Đã xóa tất cả.');
+        }
+
+        function mergeCodeBase() {
+            if (codeFiles.length === 0) { updateStatus('⚠️ Chưa có file nào.'); return; }
+            try {
+                var merged = '';
+                for (var i = 0; i < codeFiles.length; i++) {
+                    merged += codeFiles[i].content;
+                }
+                document.getElementById('codeBaseOutput').value = merged;
+                var masterHash = CryptoJS.SHA256(merged).toString(CryptoJS.enc.Hex);
+                document.getElementById('masterHashOutput').textContent = masterHash;
+                updateStatus('✅ Merge thành công. Tổng: ' + merged.length + ' ký tự. Master SHA256: ' + masterHash.substring(0, 16) + '...');
+            } catch (e) {
+                updateStatus('❌ Lỗi merge: ' + e.message);
+            }
+        }
+
+        function exportCodeBase() {
+            var content = document.getElementById('codeBaseOutput').value;
+            if (!content) { updateStatus('⚠️ Merge trước khi xuất.'); return; }
+            downloadText(content, 'linhiuu_merged_code.txt');
+            updateStatus('📤 Đã xuất merged code.');
+        }
+
+        // ============================================================
+        // DEEP CODE
+        // ============================================================
+        function generateDeepCode() {
+            var input = document.getElementById('cloneInput').value || document.getElementById('base64Input').value ||
+                document.getElementById('hexInput').value || document.getElementById('shaInput').value ||
+                '// Code mẫu\nvoid DeepHack() {\n    // Logic hack sâu nhất\n}';
+            var shaHash = '';
+            try {
+                shaHash = CryptoJS.SHA256(input).toString(CryptoJS.enc.Hex);
+            } catch (e) {
+                shaHash = 'sha256_hash_placeholder';
+            }
+            var code = '// ============================================================\n' +
+                '// 💖 LINH IUU – DEEP HACK ENGINE (VIP + SHA256)\n' +
+                '// ============================================================\n' +
+                '// 📌 Tác giả: Linh Iuu\n' +
+                '// 📌 Phiên bản: 22.0 VIP Pure Output\n' +
+                '// 📌 SHA256 Checksum: ' + shaHash + '\n' +
+                '// 📌 Ngày: ' + new Date().toISOString() + '\n' +
+                '// ============================================================\n\n' +
+                '#include <jni.h>\n#include <android/log.h>\n#include <cmath>\n#include <vector>\n#include <thread>\n#include <chrono>\n#include <random>\n#include <algorithm>\n#include <dlfcn.h>\n#include <sys/mman.h>\n#include <unistd.h>\n#include <string.h>\n#include <openssl/sha.h>\n\n' +
+                '#define LOG_TAG "LINH_IUU_DEEP"\n#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)\n\n' +
+                'const char* EXPECTED_HASH = "' + shaHash + '";\n\n' +
+                'bool VerifyIntegrity(const char* data) {\n' +
+                '    unsigned char hash[SHA256_DIGEST_LENGTH];\n' +
+                '    SHA256((unsigned char*)data, strlen(data), hash);\n' +
+                '    char hex[65];\n' +
+                '    for(int i = 0; i < 32; i++) {\n' +
+                '        sprintf(hex + i*2, "%02x", hash[i]);\n' +
+                '    }\n' +
+                '    return strcmp(hex, EXPECTED_HASH) == 0;\n' +
+                '}\n\n' +
+                '// ============================================================\n' +
+                '// PASTE ZONE\n' +
+                '// ============================================================\n' +
+                input + '\n\n' +
+                '// ============================================================\n' +
+                '// JNI EXPORT\n' +
+                '// ============================================================\n' +
+                'extern "C" JNIEXPORT void JNICALL\n' +
+                'Java_com_linhiuu_deep_Init(JNIEnv* env, jclass clazz, jlong baseAddr) {\n' +
+                '    LOGI("[DEEP] 💖 LINH IUU DEEP HACK ENGINE READY 💖");\n' +
+                '    LOGI("[DEEP] SHA256: %s", EXPECTED_HASH);\n' +
+                '}\n';
+            document.getElementById('deepCodePreview').textContent = code.substring(0, 800) + '\n... (đã tạo Deep Code)';
+            updateStatus('🧬 Đã tạo Deep Code VIP + SHA256.');
+        }
+
+        function exportDeepCode() {
+            var code = document.getElementById('deepCodePreview').textContent;
+            if (!code || code.startsWith('🔍')) { updateStatus('⚠️ Tạo Deep Code trước.'); return; }
+            downloadText(code, 'linhiuu_deep_code.txt');
+            updateStatus('📄 Đã xuất Deep Code.');
+        }
+
+        // ============================================================
+        // UTILITY
+        // ============================================================
+        function clearInput(id) {
+            if (id === 'shaOutput' || id === 'masterHashOutput') {
+                document.getElementById(id).textContent = '';
+            } else {
+                document.getElementById(id).value = '';
+            }
+            updateStatus('🧹 Đã xóa nội dung.');
+        }
+
+        function clearAll() {
+            document.getElementById('base64Input').value = '';
+            document.getElementById('base64Output').value = '';
+            document.getElementById('hexInput').value = '';
+            document.getElementById('hexOutput').value = '';
+            document.getElementById('shaInput').value = '';
+            document.getElementById('shaOutput').textContent = '';
+            document.getElementById('shaCompare').value = '';
+            document.getElementById('cloneInput').value = '';
+            document.getElementById('cloneOutput').value = '';
+            clearMultiFiles();
+            clearCodeBase();
+            updateStatus('🧹 Đã xóa tất cả.');
+        }
+
+        function copyText(id) {
+            var el = document.getElementById(id);
+            var text = el.value || el.textContent;
+            if (!text || text.includes('🔍')) { updateStatus('⚠️ Không có nội dung.'); return; }
+            navigator.clipboard.writeText(text).then(function() {
+                updateStatus('📋 Đã sao chép.');
+            }).catch(function() {
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                updateStatus('📋 Đã sao chép (fallback).');
+            });
+        }
+
+        function importFile(event) {
+            var file = event.target.files[0];
+            if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var content = e.target.result;
+                document.getElementById('base64Input').value = content;
+                document.getElementById('hexInput').value = content;
+                document.getElementById('shaInput').value = content;
+                updateStatus('📂 Đã nhập file: ' + file.name + ' (' + content.length + ' ký tự)');
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function exportResult() {
+            var result = '=== LINH IUU STUDIO ===\n';
+            result += 'Thời gian: ' + new Date().toISOString() + '\n\n';
+            result += '--- BASE64 ---\n';
+            result += 'Input: ' + document.getElementById('base64Input').value + '\n';
+            result += 'Output: ' + document.getElementById('base64Output').value + '\n\n';
+            result += '--- HEX ---\n';
+            result += 'Input: ' + document.getElementById('hexInput').value + '\n';
+            result += 'Output: ' + document.getElementById('hexOutput').value + '\n\n';
+            result += '--- SHA256 ---\n';
+            result += 'Input: ' + document.getElementById('shaInput').value + '\n';
+            result += 'Hash: ' + document.getElementById('shaOutput').textContent + '\n\n';
+            result += '--- MERGED CODE ---\n';
+            result += 'Files: ' + codeFiles.length + '\n';
+            result += 'Master SHA256: ' + document.getElementById('masterHashOutput').textContent + '\n';
+            result += 'Output: ' + document.getElementById('codeBaseOutput').value + '\n';
+            downloadText(result, 'linhiuu_export.txt');
+            updateStatus('📤 Đã xuất kết quả.');
+        }
+
+        function downloadText(content, filename) {
+            var blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.download = filename;
+            a.href = url;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 1000);
+        }
+
+        function saveLocal() {
+            try {
+                var data = {
+                    base64Input: document.getElementById('base64Input').value,
+                    hexInput: document.getElementById('hexInput').value,
+                    shaInput: document.getElementById('shaInput').value,
+                    cloneInput: document.getElementById('cloneInput').value,
+                    cloneCount: document.getElementById('cloneCount').value,
+                    encryptPassword: document.getElementById('encryptPassword').value,
+                    codeFiles: codeFiles.map(function(f) { return { name: f.name, size: f.size, content: f.content }; })
+                };
+                localStorage.setItem('linhiuu_pure_v22', JSON.stringify(data));
+                updateStatus('💾 Đã lưu.');
+            } catch (e) { updateStatus('❌ Lưu lỗi: ' + e.message); }
+        }
+
+        function loadLocal() {
+            try {
+                var raw = localStorage.getItem('linhiuu_pure_v22');
+                if (!raw) { updateStatus('⚠️ Không có dữ liệu lưu.'); return; }
+                var data = JSON.parse(raw);
+                document.getElementById('base64Input').value = data.base64Input || '';
+                document.getElementById('hexInput').value = data.hexInput || '';
+                document.getElementById('shaInput').value = data.shaInput || '';
+                document.getElementById('cloneInput').value = data.cloneInput || '';
+                document.getElementById('cloneCount').value = data.cloneCount || 5;
+                document.getElementById('encryptPassword').value = data.encryptPassword || 'linhiuu2026';
+                if (data.codeFiles && data.codeFiles.length > 0) {
+                    codeFiles = data.codeFiles;
+                    updateCodeBaseList();
+                }
+                updateStatus('📂 Đã tải.');
+            } catch (e) { updateStatus('❌ Tải lỗi: ' + e.message); }
+        }
+
+        function updateStatus(msg) {
+            document.getElementById('statusText').innerHTML = msg;
+            document.getElementById('statusTime').textContent = new Date().toLocaleTimeString();
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        function initApp() {
+            try {
+                var savedTheme = localStorage.getItem('linhiuu_theme') || 'dark';
+                setTheme(savedTheme);
+            } catch (e) {}
+            setTimeout(function() {
+                document.getElementById('cloneInput').value = 'void Hack() {\n    printf("Linh Iuu VIP\\n");\n}';
+                document.getElementById('cloneCount').value = 5;
+                document.getElementById('shaInput').value = 'Linh Iuu Ultimate VIP 2026';
+                document.getElementById('encryptPassword').value = 'linhiuu2026';
+            }, 500);
+            updateStatus('💖 Linh Iuu · Pure Output · Không metadata · v22.0');
+        }
+
+        // ============================================================
+        // START
+        // ============================================================
+        document.getElementById('appMain').style.display = 'none';
+        checkLogin();
+    </script>
+</body>
+</html>
